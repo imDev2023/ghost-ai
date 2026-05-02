@@ -9,7 +9,7 @@ change.
 
 ## Current Goal
 
-- Editor chrome components implemented successfully
+- Auth wiring implemented successfully
 
 ## Completed
 
@@ -29,6 +29,21 @@ change.
   - Dialog pattern ready for future use (from previous feature)
   - Verified TypeScript build succeeds without errors
 
+- Auth wiring (feature-specs/03-auth.md)
+  - Installed @clerk/ui for dark theme support
+  - Wrapped root layout with ClerkProvider using dark theme from @clerk/ui/themes
+  - Overrode Clerk appearance variables with app CSS custom properties (no hardcoded colors)
+  - Created proxy.ts at project root (Next.js 16 middleware replacement)
+  - All routes protected by default via clerkMiddleware; sign-in and sign-up are public
+  - Public routes derived from NEXT_PUBLIC_CLERK_SIGN_IN_URL and NEXT_PUBLIC_CLERK_SIGN_UP_URL env vars
+  - Created app/(auth)/sign-in/[[...sign-in]]/page.tsx with two-panel layout
+  - Created app/(auth)/sign-up/[[...sign-up]]/page.tsx with two-panel layout
+  - Auth pages: left panel (logo, tagline, feature list) hidden on mobile; right panel: Clerk form
+  - Updated app/page.tsx: authenticated users redirect to /editor, unauthenticated to /sign-in
+  - Added UserButton to editor navbar right section
+  - Added NEXT_PUBLIC_CLERK_SIGN_IN_URL and NEXT_PUBLIC_CLERK_SIGN_UP_URL to .env.local
+  - npm run build passes
+
 ## In Progress
 
 - None
@@ -43,8 +58,9 @@ change.
 
 ## Architecture Decisions
 
-- [Decisions made that affect the system design or
-  data model — include why the decision was made]
+- proxy.ts uses the Next.js 16 file convention (renamed from middleware.ts); exports `proxy` as the named function — Clerk's clerkMiddleware() return value is assigned to `proxy`
+- Auth pages use a route group (auth) so the URL paths remain /sign-in and /sign-up without a segment prefix
+- Appearance variables reference CSS custom properties defined in globals.css; Clerk injects them as CSS vars on its container element
 
 ## Session Notes
 
