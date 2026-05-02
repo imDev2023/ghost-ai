@@ -48,11 +48,20 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
           {/* Tabs content area */}
           <div className="flex-1 overflow-hidden">
             <Tabs defaultValue="my-projects" className="h-full flex flex-col">
-              <TabsList className="w-full rounded-none border-b border-border-default bg-transparent px-4 pt-3">
-                <TabsTrigger value="my-projects" className="flex-1">
+              <TabsList
+                variant="line"
+                className="w-full rounded-none border-b border-border-default px-4 h-10"
+              >
+                <TabsTrigger
+                  value="my-projects"
+                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:!bg-brand"
+                >
                   My Projects
                 </TabsTrigger>
-                <TabsTrigger value="shared" className="flex-1">
+                <TabsTrigger
+                  value="shared"
+                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:!bg-brand"
+                >
                   Shared
                 </TabsTrigger>
               </TabsList>
