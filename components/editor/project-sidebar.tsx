@@ -24,10 +24,11 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
 
       {/* Sidebar panel */}
       <aside
+        aria-hidden={!isOpen}
         className={`
-          fixed top-0 left-0 h-full w-80 bg-elevated border-r border-border-default z-50
+          fixed top-14 bottom-0 left-0 w-80 bg-elevated border-r border-border-default z-40
           transform transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          ${isOpen ? "translate-x-0" : "-translate-x-full pointer-events-none invisible"}
         `}
       >
         <div className="flex flex-col h-full">
