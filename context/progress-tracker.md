@@ -57,6 +57,15 @@ change.
   - Added NEXT_PUBLIC_CLERK_SIGN_IN_URL and NEXT_PUBLIC_CLERK_SIGN_UP_URL to .env.local
   - npm run build passes
 
+- Prisma schema and client (feature-specs/05-prisma.md)
+  - Created prisma/models/project.prisma with Project and ProjectCollaborator models
+  - Project: ownerId (Clerk), name, optional description, DRAFT/ARCHIVED status enum, canvasJsonPath, timestamps, indexes on ownerId and createdAt
+  - ProjectCollaborator: composite PK on (projectId, email), cascade-delete relation to Project, createdAt, indexes on email and (projectId, createdAt)
+  - Created lib/prisma.ts as a dev-cached singleton; branches on prisma+postgres:// (Accelerate via accelerateUrl) vs direct @prisma/adapter-pg
+  - Ran first migration (20260503044120_init) successfully against Prisma Postgres database
+  - Generated Prisma client to app/generated/prisma/
+  - Fixed pre-existing npm run build failure caused by __NEXT_PRIVATE_STANDALONE_CONFIG being set in the host environment; build script now unsets it before invoking next build
+
 ## In Progress
 
 - None
@@ -74,6 +83,9 @@ change.
 - proxy.ts uses the Next.js 16 file convention (renamed from middleware.ts); exports `proxy` as the named function — Clerk's clerkMiddleware() return value is assigned to `proxy`
 - Auth pages use a route group (auth) so the URL paths remain /sign-in and /sign-up without a segment prefix
 - Appearance variables reference CSS custom properties defined in globals.css; Clerk injects them as CSS vars on its container element
+- ProjectCollaborator uses a composite @@id([projectId, email]) instead of a surrogate key; satisfies the unique constraint requirement without an extra field
+- lib/prisma.ts branches on prisma+postgres:// for Accelerate vs @prisma/adapter-pg for direct TCP; global cache prevents multiple client instances during hot reloads
+- __NEXT_PRIVATE_STANDALONE_CONFIG set in the host shell (from another project's standalone deployment) caused Next.js to skip config loading and use stale JSON — fixed by unsetting it in the build script
 
 ## Session Notes
 
