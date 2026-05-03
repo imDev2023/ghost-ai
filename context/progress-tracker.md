@@ -66,6 +66,26 @@ change.
   - Generated Prisma client to app/generated/prisma/
   - Fixed pre-existing npm run build failure caused by __NEXT_PRIVATE_STANDALONE_CONFIG being set in the host environment; build script now unsets it before invoking next build
 
+- Project APIs (feature-specs/06-project-apis.md)
+  - Created app/api/projects/route.ts: GET lists current user's projects ordered by createdAt desc; POST creates a project (defaults name to "Untitled Project")
+  - Created app/api/projects/[projectId]/route.ts: PATCH renames a project (owner-only); DELETE removes a project (owner-only)
+  - 401 returned when no authenticated userId; 403 returned when userId !== project.ownerId
+  - params awaited as Promise per Next.js 16 route handler convention
+  - npm run build passes
+
+- Editor home wiring (feature-specs/07-wire-editor-home.md)
+  - Created lib/projects.ts: getOwnedProjects() and getSharedProjects() server helpers; shared Project interface with isOwned field
+  - Created hooks/use-project-actions.ts: manages dialog state + real API mutations; replaces mock use-project-dialogs.ts
+  - Create: generates roomId as `${toSlug(name)}-${shortSuffix()}`, POSTs to /api/projects with id, navigates to /editor/[roomId]
+  - Rename: PATCHes /api/projects/[id], calls router.refresh() on success
+  - Delete: DELETEs /api/projects/[id]; redirects to /editor if active workspace, otherwise router.refresh()
+  - Updated POST /api/projects to accept an optional client-provided id (keeps project ID and Liveblocks room ID aligned)
+  - Created components/editor/editor-home.tsx: client shell that receives ownedProjects + sharedProjects as props
+  - Converted app/editor/page.tsx to a server component; fetches both project lists server-side, no client-side fetch on initial load
+  - Updated project-sidebar.tsx: accepts ownedProjects/sharedProjects as props; shows project.id as room ID in mono; removed mock imports
+  - Updated all three dialogs: swapped MockProject → Project from lib/projects; create dialog shows "Room ID:" preview
+  - npm run build passes
+
 ## In Progress
 
 - None
