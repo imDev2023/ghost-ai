@@ -1,22 +1,73 @@
 "use client";
 
-import { X, Plus } from "lucide-react";
+import { X, Plus, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MOCK_OWNED_PROJECTS, MOCK_SHARED_PROJECTS, type MockProject } from "@/lib/mock-projects";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
+  onNewProject: () => void;
+  onRenameProject: (project: MockProject) => void;
+  onDeleteProject: (project: MockProject) => void;
 }
 
-export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
+function ProjectItem({
+  project,
+  onRename,
+  onDelete,
+}: {
+  project: MockProject;
+  onRename?: () => void;
+  onDelete?: () => void;
+}) {
+  return (
+    <div className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-subtle transition-colors cursor-pointer">
+      <div className="flex flex-col min-w-0">
+        <span className="text-sm text-copy-primary truncate">{project.name}</span>
+        <span className="text-xs text-copy-faint font-mono truncate">{project.slug}</span>
+      </div>
+
+      {project.isOwned && onRename && onDelete && (
+        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ml-2">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={(e) => { e.stopPropagation(); onRename(); }}
+            aria-label="Rename project"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+            aria-label="Delete project"
+            className="hover:text-error"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ProjectSidebar({
+  isOpen,
+  onClose,
+  onNewProject,
+  onRenameProject,
+  onDeleteProject,
+}: ProjectSidebarProps) {
   return (
     <>
-      {/* Backdrop overlay */}
+      {/* Mobile backdrop scrim */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity md:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -24,7 +75,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
 
       {/* Sidebar panel */}
       <aside
-        aria-hidden={!isOpen}
+        inert={!isOpen}
         className={`
           fixed top-14 bottom-0 left-0 w-80 bg-elevated border-r border-border-default z-40
           transform transition-transform duration-300 ease-in-out
@@ -67,26 +118,43 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
               </TabsList>
 
               <ScrollArea className="flex-1">
-                <TabsContent value="my-projects" className="px-4 py-6 mt-0">
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <p className="text-copy-muted text-sm">
-                      No projects yet
-                    </p>
-                    <p className="text-copy-faint text-xs mt-1">
-                      Create your first project to get started
-                    </p>
-                  </div>
+                <TabsContent value="my-projects" className="px-2 py-3 mt-0">
+                  {MOCK_OWNED_PROJECTS.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <p className="text-copy-muted text-sm">No projects yet</p>
+                      <p className="text-copy-faint text-xs mt-1">
+                        Create your first project to get started
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-0.5">
+                      {MOCK_OWNED_PROJECTS.map((project) => (
+                        <ProjectItem
+                          key={project.id}
+                          project={project}
+                          onRename={() => onRenameProject(project)}
+                          onDelete={() => onDeleteProject(project)}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </TabsContent>
 
-                <TabsContent value="shared" className="px-4 py-6 mt-0">
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <p className="text-copy-muted text-sm">
-                      No shared projects
-                    </p>
-                    <p className="text-copy-faint text-xs mt-1">
-                      Projects shared with you will appear here
-                    </p>
-                  </div>
+                <TabsContent value="shared" className="px-2 py-3 mt-0">
+                  {MOCK_SHARED_PROJECTS.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <p className="text-copy-muted text-sm">No shared projects</p>
+                      <p className="text-copy-faint text-xs mt-1">
+                        Projects shared with you will appear here
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-0.5">
+                      {MOCK_SHARED_PROJECTS.map((project) => (
+                        <ProjectItem key={project.id} project={project} />
+                      ))}
+                    </div>
+                  )}
                 </TabsContent>
               </ScrollArea>
             </Tabs>
@@ -94,7 +162,7 @@ export function ProjectSidebar({ isOpen, onClose }: ProjectSidebarProps) {
 
           {/* Footer with New Project button */}
           <div className="p-4 border-t border-border-default">
-            <Button className="w-full" variant="default">
+            <Button className="w-full" variant="default" onClick={onNewProject}>
               <Plus className="h-4 w-4 mr-2" />
               New Project
             </Button>

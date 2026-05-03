@@ -29,6 +29,19 @@ change.
   - Dialog pattern ready for future use (from previous feature)
   - Verified TypeScript build succeeds without errors
 
+- Project dialogs and editor home (feature-specs/04-project-dialogs.md)
+  - Editor home: centered heading, description, and New Project button
+  - Created lib/mock-projects.ts with owned and shared mock data
+  - Created hooks/use-project-dialogs.ts managing dialog, form, and loading state
+  - Create Project dialog: name input, live slug preview, Enter submits
+  - Rename Project dialog: prefilled input, current name in description, auto-focus, Enter submits
+  - Delete Project dialog: destructive confirm only, no input
+  - Sidebar project items with hover-revealed rename/delete actions (owned only)
+  - Shared projects show no actions
+  - Mobile backdrop scrim on sidebar
+  - All wiring: editor home → Create, sidebar footer → Create, sidebar item → Rename/Delete
+  - npm run build and lint pass with no errors
+
 - Auth wiring (feature-specs/03-auth.md)
   - Installed @clerk/ui for dark theme support
   - Wrapped root layout with ClerkProvider using dark theme from @clerk/ui/themes
