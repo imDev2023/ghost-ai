@@ -21,17 +21,31 @@ export async function POST(request: Request) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json().catch(() => ({}));
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  const b = body as Record<string, unknown>;
   const name =
-    typeof body?.name === "string" && body.name.trim()
-      ? body.name.trim()
-      : "Untitled Project";
+    typeof b?.name === "string" && b.name.trim() ? b.name.trim() : undefined;
+  if (!name) {
+    return Response.json({ error: "name is required" }, { status: 400 });
+  }
   const id =
-    typeof body?.id === "string" && body.id.trim() ? body.id.trim() : undefined;
+    typeof b?.id === "string" && b.id.trim() ? b.id.trim() : undefined;
 
-  const project = await prisma.project.create({
-    data: { ...(id ? { id } : {}), ownerId: userId, name },
-  });
-
-  return Response.json(project, { status: 201 });
+  try {
+    const project = await prisma.project.create({
+      data: { ...(id ? { id } : {}), ownerId: userId, name },
+    });
+    return Response.json(project, { status: 201 });
+  } catch (err: unknown) {
+    if ((err as { code?: string }).code === "P2002") {
+      return Response.json({ error: "Project ID already exists" }, { status: 409 });
+    }
+    throw err;
+  }
 }

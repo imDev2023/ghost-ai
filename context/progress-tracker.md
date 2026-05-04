@@ -86,6 +86,26 @@ change.
   - Updated all three dialogs: swapped MockProject → Project from lib/projects; create dialog shows "Room ID:" preview
   - npm run build passes
 
+- Editor workspace shell (feature-specs/08-editor-workspace-shell.md)
+  - Created lib/project-access.ts: getCurrentIdentity() returns userId + primary email; getProjectWithAccess(roomId) checks owner or collaborator access
+  - Created components/editor/access-denied.tsx: centered layout with lock icon, message, and link back to /editor
+  - Updated components/editor/editor-navbar.tsx: added optional projectName (center), Share button placeholder, and AI sidebar toggle button
+  - Updated components/editor/project-sidebar.tsx: added optional activeRoomId prop; active item rendered with subtle ring highlight
+  - Created components/editor/workspace-shell.tsx: client shell managing sidebar + AI sidebar state, reuses ProjectSidebar and EditorNavbar with workspace props, canvas and AI sidebar placeholders
+  - Created app/editor/[roomId]/page.tsx: server component; redirects unauthenticated users to /sign-in; shows AccessDenied for missing or unauthorized projects; passes project name and room data to WorkspaceShell
+  - npm run build passes
+
+- Share dialog (feature-specs/09-share-dialog.md)
+  - Created lib/clerk-users.ts: enrichEmails() batches email → Clerk user lookup, returns Map<email, {name, avatar}>; falls back gracefully on Clerk errors
+  - Created GET /api/projects/[projectId]/collaborators: checks owner-or-collaborator access, returns enriched collaborator list
+  - Created POST /api/projects/[projectId]/collaborators: owner-only; validates email, returns 409 on duplicate, returns enriched collaborator on 201
+  - Created DELETE /api/projects/[projectId]/collaborators/[email]: owner-only; URL-decodes email param, silently no-ops on missing record, returns 204
+  - Created components/editor/dialogs/share-dialog.tsx: fetches collaborators on open; owners see invite input + remove buttons; collaborators see read-only list; Clerk avatars rendered with a plain img tag; Copy link button with 2s "Copied!" feedback
+  - Updated EditorNavbar: added onShare prop; Share button now calls onShare instead of being disabled
+  - Updated WorkspaceShell: added isOwner prop; added isShareOpen state; passes onShare to navbar; renders ShareDialog
+  - Updated app/editor/[roomId]/page.tsx: computes isOwner = project.ownerId === userId; passes isOwner to WorkspaceShell
+  - npm run build passes
+
 ## In Progress
 
 - None

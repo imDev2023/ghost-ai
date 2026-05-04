@@ -14,19 +14,22 @@ interface ProjectSidebarProps {
   sharedProjects: Project[];
   onRenameProject: (project: Project) => void;
   onDeleteProject: (project: Project) => void;
+  activeRoomId?: string;
 }
 
 function ProjectItem({
   project,
   onRename,
   onDelete,
+  isActive,
 }: {
   project: Project;
   onRename?: () => void;
   onDelete?: () => void;
+  isActive?: boolean;
 }) {
   return (
-    <div className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-subtle transition-colors cursor-pointer">
+    <div className={`group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-subtle transition-colors cursor-pointer ${isActive ? "bg-subtle ring-1 ring-border-subtle" : ""}`}>
       <div className="flex flex-col min-w-0">
         <span className="text-sm text-copy-primary truncate">{project.name}</span>
         <span className="text-xs text-copy-faint font-mono truncate">{project.id}</span>
@@ -65,6 +68,7 @@ export function ProjectSidebar({
   sharedProjects,
   onRenameProject,
   onDeleteProject,
+  activeRoomId,
 }: ProjectSidebarProps) {
   return (
     <>
@@ -136,6 +140,7 @@ export function ProjectSidebar({
                         <ProjectItem
                           key={project.id}
                           project={project}
+                          isActive={project.id === activeRoomId}
                           onRename={() => onRenameProject(project)}
                           onDelete={() => onDeleteProject(project)}
                         />
@@ -155,7 +160,11 @@ export function ProjectSidebar({
                   ) : (
                     <div className="flex flex-col gap-0.5">
                       {sharedProjects.map((project) => (
-                        <ProjectItem key={project.id} project={project} />
+                        <ProjectItem
+                          key={project.id}
+                          project={project}
+                          isActive={project.id === activeRoomId}
+                        />
                       ))}
                     </div>
                   )}
