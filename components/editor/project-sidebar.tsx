@@ -4,14 +4,16 @@ import { X, Plus, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { MOCK_OWNED_PROJECTS, MOCK_SHARED_PROJECTS, type MockProject } from "@/lib/mock-projects";
+import { type Project } from "@/lib/projects";
 
 interface ProjectSidebarProps {
   isOpen: boolean;
   onClose: () => void;
   onNewProject: () => void;
-  onRenameProject: (project: MockProject) => void;
-  onDeleteProject: (project: MockProject) => void;
+  ownedProjects: Project[];
+  sharedProjects: Project[];
+  onRenameProject: (project: Project) => void;
+  onDeleteProject: (project: Project) => void;
 }
 
 function ProjectItem({
@@ -19,7 +21,7 @@ function ProjectItem({
   onRename,
   onDelete,
 }: {
-  project: MockProject;
+  project: Project;
   onRename?: () => void;
   onDelete?: () => void;
 }) {
@@ -27,7 +29,7 @@ function ProjectItem({
     <div className="group flex items-center justify-between rounded-xl px-3 py-2 hover:bg-subtle transition-colors cursor-pointer">
       <div className="flex flex-col min-w-0">
         <span className="text-sm text-copy-primary truncate">{project.name}</span>
-        <span className="text-xs text-copy-faint font-mono truncate">{project.slug}</span>
+        <span className="text-xs text-copy-faint font-mono truncate">{project.id}</span>
       </div>
 
       {project.isOwned && onRename && onDelete && (
@@ -59,6 +61,8 @@ export function ProjectSidebar({
   isOpen,
   onClose,
   onNewProject,
+  ownedProjects,
+  sharedProjects,
   onRenameProject,
   onDeleteProject,
 }: ProjectSidebarProps) {
@@ -105,13 +109,13 @@ export function ProjectSidebar({
               >
                 <TabsTrigger
                   value="my-projects"
-                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:!bg-brand"
+                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:bg-brand!"
                 >
                   My Projects
                 </TabsTrigger>
                 <TabsTrigger
                   value="shared"
-                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:!bg-brand"
+                  className="flex-1 text-copy-muted data-active:text-brand [&::after]:bg-brand!"
                 >
                   Shared
                 </TabsTrigger>
@@ -119,7 +123,7 @@ export function ProjectSidebar({
 
               <ScrollArea className="flex-1">
                 <TabsContent value="my-projects" className="px-2 py-3 mt-0">
-                  {MOCK_OWNED_PROJECTS.length === 0 ? (
+                  {ownedProjects.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
                       <p className="text-copy-muted text-sm">No projects yet</p>
                       <p className="text-copy-faint text-xs mt-1">
@@ -128,7 +132,7 @@ export function ProjectSidebar({
                     </div>
                   ) : (
                     <div className="flex flex-col gap-0.5">
-                      {MOCK_OWNED_PROJECTS.map((project) => (
+                      {ownedProjects.map((project) => (
                         <ProjectItem
                           key={project.id}
                           project={project}
@@ -141,7 +145,7 @@ export function ProjectSidebar({
                 </TabsContent>
 
                 <TabsContent value="shared" className="px-2 py-3 mt-0">
-                  {MOCK_SHARED_PROJECTS.length === 0 ? (
+                  {sharedProjects.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
                       <p className="text-copy-muted text-sm">No shared projects</p>
                       <p className="text-copy-faint text-xs mt-1">
@@ -150,7 +154,7 @@ export function ProjectSidebar({
                     </div>
                   ) : (
                     <div className="flex flex-col gap-0.5">
-                      {MOCK_SHARED_PROJECTS.map((project) => (
+                      {sharedProjects.map((project) => (
                         <ProjectItem key={project.id} project={project} />
                       ))}
                     </div>

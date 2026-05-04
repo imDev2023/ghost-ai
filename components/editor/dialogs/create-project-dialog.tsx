@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toSlug } from "@/hooks/use-project-dialogs";
+import { toSlug } from "@/hooks/use-project-actions";
 
 interface CreateProjectDialogProps {
   open: boolean;
   onClose: () => void;
   name: string;
+  suffix: string;
   onNameChange: (value: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
@@ -25,11 +26,13 @@ export function CreateProjectDialog({
   open,
   onClose,
   name,
+  suffix,
   onNameChange,
   onSubmit,
   isLoading,
 }: CreateProjectDialogProps) {
   const slug = toSlug(name);
+  const roomId = slug ? `${slug}-${suffix}` : "";
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose(); }}>
@@ -62,10 +65,10 @@ export function CreateProjectDialog({
             />
           </div>
 
-          {slug && (
+          {roomId && (
             <p className="text-xs text-copy-faint">
-              Slug:{" "}
-              <span className="font-mono text-copy-muted">{slug}</span>
+              Room ID:{" "}
+              <span className="font-mono text-copy-muted">{roomId}</span>
             </p>
           )}
         </div>
