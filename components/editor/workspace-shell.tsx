@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Sparkles, BotMessageSquare } from "lucide-react";
 import { EditorNavbar } from "@/components/editor/editor-navbar";
 import { ProjectSidebar } from "@/components/editor/project-sidebar";
 import { CreateProjectDialog } from "@/components/editor/dialogs/create-project-dialog";
@@ -9,6 +10,7 @@ import { DeleteProjectDialog } from "@/components/editor/dialogs/delete-project-
 import { ShareDialog } from "@/components/editor/dialogs/share-dialog";
 import { useProjectActions } from "@/hooks/use-project-actions";
 import { type Project } from "@/lib/projects";
+import { CanvasWrapper } from "@/components/editor/canvas-wrapper";
 
 interface WorkspaceShellProps {
   projectName: string;
@@ -36,6 +38,7 @@ export function WorkspaceShell({
     createSuffix,
     renameName,
     isLoading,
+    error,
     openCreate,
     openRename,
     openDelete,
@@ -48,7 +51,7 @@ export function WorkspaceShell({
   } = useProjectActions();
 
   return (
-    <div className="h-screen flex flex-col bg-base overflow-hidden">
+    <div className="h-screen bg-base">
       <EditorNavbar
         isSidebarOpen={isSidebarOpen}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
@@ -68,17 +71,53 @@ export function WorkspaceShell({
         activeRoomId={roomId}
       />
 
-      <div className="flex-1 mt-14 flex overflow-hidden">
-        <main className="flex-1 bg-base flex items-center justify-center">
-          <p className="text-copy-faint text-sm">Canvas coming soon</p>
-        </main>
+      <main className="absolute inset-0 top-14">
+        <CanvasWrapper roomId={roomId} />
+      </main>
 
-        {isAiSidebarOpen && (
-          <aside className="w-80 bg-elevated border-l border-border-default flex items-center justify-center shrink-0">
-            <p className="text-copy-faint text-sm">AI chat coming soon</p>
-          </aside>
-        )}
-      </div>
+      <aside
+        inert={!isAiSidebarOpen}
+        className={`
+          fixed top-14 bottom-0 right-0 w-80 bg-elevated border-l border-border-default z-40
+          flex flex-col transform transition-transform duration-300 ease-in-out
+          ${isAiSidebarOpen ? "translate-x-0" : "translate-x-full pointer-events-none invisible"}
+        `}
+      >
+        <div className="flex items-start justify-between px-4 py-4 border-b border-border-default">
+          <div>
+            <h2 className="text-sm font-semibold text-copy-primary">AI Copilot</h2>
+            <p className="text-xs text-copy-muted mt-0.5">Placeholder panel</p>
+          </div>
+          <Sparkles className="h-4 w-4 text-brand mt-0.5" />
+        </div>
+
+        <div className="flex-1 p-4 flex flex-col gap-3 overflow-y-auto">
+          <div className="rounded-2xl border border-border-default bg-subtle p-4 flex gap-3">
+            <div className="h-8 w-8 rounded-xl bg-subtle border border-border-default flex items-center justify-center shrink-0">
+              <BotMessageSquare className="h-4 w-4 text-ai-text" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-copy-primary">Chat surface pending</p>
+              <p className="text-xs text-copy-muted mt-1 leading-relaxed">
+                The toggle is wired. Messaging and generation are intentionally out of
+                scope here.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex-1" />
+
+          <div className="rounded-2xl border border-border-default bg-subtle p-4">
+            <p className="text-xs font-semibold text-copy-faint uppercase tracking-[0.15em] mb-2">
+              Future Hooks
+            </p>
+            <p className="text-xs text-copy-muted leading-relaxed">
+              Prompt composer, run status, and architecture guidance will attach to this
+              sidebar.
+            </p>
+          </div>
+        </div>
+      </aside>
 
       <CreateProjectDialog
         open={dialog === "create"}
@@ -88,6 +127,7 @@ export function WorkspaceShell({
         onNameChange={setCreateName}
         onSubmit={handleCreate}
         isLoading={isLoading}
+        error={error}
       />
 
       <RenameProjectDialog

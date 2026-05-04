@@ -5,19 +5,17 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// pg v9 will change semantics of 'prefer'/'require'/'verify-ca' — lock in current behavior now.
+// pg v9 will change 'prefer'/'require'/'verify-ca' to libpq semantics — lock in current behavior now.
 function toVerifyFull(url: string): string {
   return url.replace(/([?&]sslmode=)(prefer|require|verify-ca)(?=&|$)/, "$1verify-full");
 }
 
-// Set PG_FORCE_VERIFY_FULL=true to opt in to rewriting sslmode → verify-full.
 function createClient(): PrismaClient {
   const url = process.env.DATABASE_URL ?? "";
   if (url.startsWith("prisma+postgres://")) {
     return new PrismaClient({ accelerateUrl: url });
   }
-  const connectionString = process.env.PG_FORCE_VERIFY_FULL ? toVerifyFull(url) : url;
-  const adapter = new PrismaPg({ connectionString });
+  const adapter = new PrismaPg({ connectionString: toVerifyFull(url) });
   return new PrismaClient({ adapter });
 }
 

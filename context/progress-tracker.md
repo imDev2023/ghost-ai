@@ -106,6 +106,30 @@ change.
   - Updated app/editor/[roomId]/page.tsx: computes isOwner = project.ownerId === userId; passes isOwner to WorkspaceShell
   - npm run build passes
 
+- Liveblocks setup (feature-specs/10-liveblocks-setup.md)
+  - Installed @liveblocks/node (was missing; all other Liveblocks packages were pre-installed)
+  - Updated liveblocks.config.ts: Presence (cursor x/y + isThinking), UserMeta (id, info: name/avatar/color)
+  - Created lib/liveblocks.ts: lazy cached Liveblocks node client via getLiveblocksClient(); getCursorColor() deterministically maps userId to a fixed 10-color palette using djb2 hash
+  - Created POST /api/liveblocks-auth: requires Clerk auth, verifies project access via getProjectWithAccess(), calls getOrCreateRoom() to ensure room exists, issues access token scoped to that room with name/avatar/color in userInfo
+  - Added LIVEBLOCKS_SECRET_KEY placeholder to .env.local (must be filled with real key from Liveblocks dashboard)
+  - npm run build passes
+
+- Base canvas (feature-specs/11-base-canvas.md)
+  - Created types/canvas.ts: CanvasNodeData (label, color?, shape?), CanvasNode (Node<CanvasNodeData, "canvasNode">), CanvasEdge (Edge<Record<string,unknown>, "canvasEdge">)
+  - Created components/editor/canvas.tsx: useLiveblocksFlow<CanvasNode, CanvasEdge> with suspense:true, empty initial nodes/edges; ReactFlow with ConnectionMode.Loose, fitView, MiniMap, Background (dots)
+  - Created components/editor/canvas-wrapper.tsx: LiveblocksProvider (/api/liveblocks-auth) → RoomProvider (initialPresence cursor:null, isThinking:false) → ErrorBoundary → ClientSideSuspense → Canvas; CSS imports for xyflow, liveblocks-react-ui, liveblocks-react-flow
+  - Updated workspace-shell.tsx: replaced canvas placeholder with CanvasWrapper, passing roomId
+  - Installed react-error-boundary
+  - npm run build passes
+
+- Shape panel (feature-specs/12-shape-panel.md)
+  - Updated types/canvas.ts: added CanvasShape union (rectangle|diamond|circle|pill|cylinder|hexagon), ShapeDragPayload interface, tightened shape field from string to CanvasShape
+  - Created components/editor/nodes/canvas-node.tsx: custom node renderer (CanvasFlowNode) — bordered rectangle with centered label, top/bottom Handles, ring highlight when selected; uses width/height from NodeProps for sizing
+  - Created components/editor/shape-panel.tsx: floating pill toolbar with 6 draggable icon buttons (RectangleHorizontal/Diamond/Circle/Pill/Cylinder/Hexagon from lucide-react); drag start sets application/json payload with shape name and default dimensions (rectangle 160x80, diamond 120x120, circle 80x80, pill 160x60, cylinder 100x100, hexagon 100x100)
+  - Updated components/editor/canvas.tsx: split into Canvas (ReactFlowProvider wrapper) and CanvasInner (useLiveblocksFlow + useReactFlow); added onDragOver (preventDefault, dropEffect=copy) and onDrop (parse payload, screenToFlowPosition centered at cursor, onNodesChange add with type canvasNode); nodeTypes registered; ShapePanel in Panel position=bottom-center
+  - Node IDs generated as shape-timestamp-counter
+  - npm run build passes
+
 ## In Progress
 
 - None

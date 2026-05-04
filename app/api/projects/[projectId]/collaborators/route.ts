@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { enrichEmails } from "@/lib/clerk-users";
 
@@ -43,11 +43,33 @@ export async function GET(
   const emails = collaborators.map((c) => c.email);
   const clerkMap = await enrichEmails(emails).catch(() => new Map());
 
-  const result = collaborators.map((c) => ({
-    email: c.email,
-    name: clerkMap.get(c.email)?.name ?? null,
-    avatar: clerkMap.get(c.email)?.avatar ?? null,
-  }));
+  const client = await clerkClient();
+  let ownerEntry: { email: string; name: string | null; avatar: string | null; role: "owner" } | null = null;
+  try {
+    const ownerUser = await client.users.getUser(project.ownerId);
+    const email =
+      ownerUser.primaryEmailAddress?.emailAddress ??
+      ownerUser.emailAddresses[0]?.emailAddress ??
+      "";
+    ownerEntry = {
+      email,
+      name: [ownerUser.firstName, ownerUser.lastName].filter(Boolean).join(" ") || null,
+      avatar: ownerUser.imageUrl || null,
+      role: "owner",
+    };
+  } catch {
+    // owner lookup failed — omit from list
+  }
+
+  const result = [
+    ...(ownerEntry ? [ownerEntry] : []),
+    ...collaborators.map((c) => ({
+      email: c.email,
+      name: clerkMap.get(c.email)?.name ?? null,
+      avatar: clerkMap.get(c.email)?.avatar ?? null,
+      role: "collaborator" as const,
+    })),
+  ];
 
   return Response.json(result);
 }

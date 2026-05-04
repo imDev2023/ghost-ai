@@ -26,6 +26,7 @@ export function EditorHome({ ownedProjects, sharedProjects }: EditorHomeProps) {
     createSuffix,
     renameName,
     isLoading,
+    error,
     openCreate,
     openRename,
     openDelete,
@@ -77,6 +78,7 @@ export function EditorHome({ ownedProjects, sharedProjects }: EditorHomeProps) {
         onNameChange={setCreateName}
         onSubmit={handleCreate}
         isLoading={isLoading}
+        error={error}
       />
 
       <RenameProjectDialog
