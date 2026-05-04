@@ -20,6 +20,7 @@ interface CreateProjectDialogProps {
   onNameChange: (value: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
+  error?: string | null;
 }
 
 export function CreateProjectDialog({
@@ -30,6 +31,7 @@ export function CreateProjectDialog({
   onNameChange,
   onSubmit,
   isLoading,
+  error,
 }: CreateProjectDialogProps) {
   const slug = toSlug(name);
   const roomId = slug ? `${slug}-${suffix}` : "";
@@ -41,7 +43,7 @@ export function CreateProjectDialog({
         showCloseButton={false}
       >
         <DialogHeader>
-          <DialogTitle className="text-copy-primary text-base font-semibold">
+          <DialogTitle className="text-copy-primary font-semibold">
             New Project
           </DialogTitle>
           <DialogDescription className="text-copy-muted">
@@ -72,6 +74,8 @@ export function CreateProjectDialog({
             </p>
           )}
         </div>
+
+        {error && <p className="text-error text-xs">{error}</p>}
 
         <div className="flex items-center justify-end gap-2 pt-2">
           <DialogClose render={<Button variant="ghost" disabled={isLoading} />}>

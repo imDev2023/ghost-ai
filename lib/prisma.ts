@@ -5,7 +5,7 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// pg v9 will change semantics of 'prefer'/'require'/'verify-ca' — lock in current behavior now.
+// pg v9 will change 'prefer'/'require'/'verify-ca' to libpq semantics — lock in current behavior now.
 function toVerifyFull(url: string): string {
   return url.replace(/([?&]sslmode=)(prefer|require|verify-ca)(?=&|$)/, "$1verify-full");
 }

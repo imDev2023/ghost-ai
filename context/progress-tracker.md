@@ -86,6 +86,50 @@ change.
   - Updated all three dialogs: swapped MockProject → Project from lib/projects; create dialog shows "Room ID:" preview
   - npm run build passes
 
+- Editor workspace shell (feature-specs/08-editor-workspace-shell.md)
+  - Created lib/project-access.ts: getCurrentIdentity() returns userId + primary email; getProjectWithAccess(roomId) checks owner or collaborator access
+  - Created components/editor/access-denied.tsx: centered layout with lock icon, message, and link back to /editor
+  - Updated components/editor/editor-navbar.tsx: added optional projectName (center), Share button placeholder, and AI sidebar toggle button
+  - Updated components/editor/project-sidebar.tsx: added optional activeRoomId prop; active item rendered with subtle ring highlight
+  - Created components/editor/workspace-shell.tsx: client shell managing sidebar + AI sidebar state, reuses ProjectSidebar and EditorNavbar with workspace props, canvas and AI sidebar placeholders
+  - Created app/editor/[roomId]/page.tsx: server component; redirects unauthenticated users to /sign-in; shows AccessDenied for missing or unauthorized projects; passes project name and room data to WorkspaceShell
+  - npm run build passes
+
+- Share dialog (feature-specs/09-share-dialog.md)
+  - Created lib/clerk-users.ts: enrichEmails() batches email → Clerk user lookup, returns Map<email, {name, avatar}>; falls back gracefully on Clerk errors
+  - Created GET /api/projects/[projectId]/collaborators: checks owner-or-collaborator access, returns enriched collaborator list
+  - Created POST /api/projects/[projectId]/collaborators: owner-only; validates email, returns 409 on duplicate, returns enriched collaborator on 201
+  - Created DELETE /api/projects/[projectId]/collaborators/[email]: owner-only; URL-decodes email param, silently no-ops on missing record, returns 204
+  - Created components/editor/dialogs/share-dialog.tsx: fetches collaborators on open; owners see invite input + remove buttons; collaborators see read-only list; Clerk avatars rendered with a plain img tag; Copy link button with 2s "Copied!" feedback
+  - Updated EditorNavbar: added onShare prop; Share button now calls onShare instead of being disabled
+  - Updated WorkspaceShell: added isOwner prop; added isShareOpen state; passes onShare to navbar; renders ShareDialog
+  - Updated app/editor/[roomId]/page.tsx: computes isOwner = project.ownerId === userId; passes isOwner to WorkspaceShell
+  - npm run build passes
+
+- Liveblocks setup (feature-specs/10-liveblocks-setup.md)
+  - Installed @liveblocks/node (was missing; all other Liveblocks packages were pre-installed)
+  - Updated liveblocks.config.ts: Presence (cursor x/y + isThinking), UserMeta (id, info: name/avatar/color)
+  - Created lib/liveblocks.ts: lazy cached Liveblocks node client via getLiveblocksClient(); getCursorColor() deterministically maps userId to a fixed 10-color palette using djb2 hash
+  - Created POST /api/liveblocks-auth: requires Clerk auth, verifies project access via getProjectWithAccess(), calls getOrCreateRoom() to ensure room exists, issues access token scoped to that room with name/avatar/color in userInfo
+  - Added LIVEBLOCKS_SECRET_KEY placeholder to .env.local (must be filled with real key from Liveblocks dashboard)
+  - npm run build passes
+
+- Base canvas (feature-specs/11-base-canvas.md)
+  - Created types/canvas.ts: CanvasNodeData (label, color?, shape?), CanvasNode (Node<CanvasNodeData, "canvasNode">), CanvasEdge (Edge<Record<string,unknown>, "canvasEdge">)
+  - Created components/editor/canvas.tsx: useLiveblocksFlow<CanvasNode, CanvasEdge> with suspense:true, empty initial nodes/edges; ReactFlow with ConnectionMode.Loose, fitView, MiniMap, Background (dots)
+  - Created components/editor/canvas-wrapper.tsx: LiveblocksProvider (/api/liveblocks-auth) → RoomProvider (initialPresence cursor:null, isThinking:false) → ErrorBoundary → ClientSideSuspense → Canvas; CSS imports for xyflow, liveblocks-react-ui, liveblocks-react-flow
+  - Updated workspace-shell.tsx: replaced canvas placeholder with CanvasWrapper, passing roomId
+  - Installed react-error-boundary
+  - npm run build passes
+
+- Shape panel (feature-specs/12-shape-panel.md)
+  - Updated types/canvas.ts: added CanvasShape union (rectangle|diamond|circle|pill|cylinder|hexagon), ShapeDragPayload interface, tightened shape field from string to CanvasShape
+  - Created components/editor/nodes/canvas-node.tsx: custom node renderer (CanvasFlowNode) — bordered rectangle with centered label, top/bottom Handles, ring highlight when selected; uses width/height from NodeProps for sizing
+  - Created components/editor/shape-panel.tsx: floating pill toolbar with 6 draggable icon buttons (RectangleHorizontal/Diamond/Circle/Pill/Cylinder/Hexagon from lucide-react); drag start sets application/json payload with shape name and default dimensions (rectangle 160x80, diamond 120x120, circle 80x80, pill 160x60, cylinder 100x100, hexagon 100x100)
+  - Updated components/editor/canvas.tsx: split into Canvas (ReactFlowProvider wrapper) and CanvasInner (useLiveblocksFlow + useReactFlow); added onDragOver (preventDefault, dropEffect=copy) and onDrop (parse payload, screenToFlowPosition centered at cursor, onNodesChange add with type canvasNode); nodeTypes registered; ShapePanel in Panel position=bottom-center
+  - Node IDs generated as shape-timestamp-counter
+  - npm run build passes
+
 ## In Progress
 
 - None
