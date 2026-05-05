@@ -8,6 +8,8 @@ import { CreateProjectDialog } from "@/components/editor/dialogs/create-project-
 import { RenameProjectDialog } from "@/components/editor/dialogs/rename-project-dialog";
 import { DeleteProjectDialog } from "@/components/editor/dialogs/delete-project-dialog";
 import { ShareDialog } from "@/components/editor/dialogs/share-dialog";
+import { StarterTemplatesModal } from "@/components/editor/starter-templates-modal";
+import { type CanvasTemplate } from "@/components/editor/starter-templates";
 import { useProjectActions } from "@/hooks/use-project-actions";
 import { type Project } from "@/lib/projects";
 import { CanvasWrapper } from "@/components/editor/canvas-wrapper";
@@ -30,6 +32,7 @@ export function WorkspaceShell({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAiSidebarOpen, setIsAiSidebarOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
 
   const {
     dialog,
@@ -57,6 +60,7 @@ export function WorkspaceShell({
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         projectName={projectName}
         onShare={() => setIsShareOpen(true)}
+        onOpenTemplates={() => setIsTemplatesOpen(true)}
         onToggleAiSidebar={() => setIsAiSidebarOpen((prev) => !prev)}
       />
 
@@ -153,6 +157,14 @@ export function WorkspaceShell({
         onClose={() => setIsShareOpen(false)}
         projectId={roomId}
         isOwner={isOwner}
+      />
+
+      <StarterTemplatesModal
+        open={isTemplatesOpen}
+        onClose={() => setIsTemplatesOpen(false)}
+        onImport={(template: CanvasTemplate) => {
+          window.dispatchEvent(new CustomEvent("canvas-load-template", { detail: template }));
+        }}
       />
     </div>
   );

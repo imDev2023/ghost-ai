@@ -1,0 +1,346 @@
+{
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/postcss.config.mjs": {
+    "mtime": 1777692458.565231,
+    "hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/liveblocks.config.ts": {
+    "mtime": 1777869495.8620985,
+    "hash": "75e3e3d9ac9eb93b4ba0992631f2b54a"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/prisma.config.ts": {
+    "mtime": 1777782884.229363,
+    "hash": "ccb153df7230e0185e44ef7746627fc1"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/next-env.d.ts": {
+    "mtime": 1777908365.1561654,
+    "hash": "d0f8375ae1199dc7acd3977fc33b78b8"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/proxy.ts": {
+    "mtime": 1777782275.6664393,
+    "hash": "e4454befde6b594c9a2c8c0507e5a43b"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/eslint.config.mjs": {
+    "mtime": 1777692458.5646002,
+    "hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/next.config.ts": {
+    "mtime": 1777783960.2247102,
+    "hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/types/canvas.ts": {
+    "mtime": 1777908227.101695,
+    "hash": "07545d1253c78c2415427dc6ddfe5bcf"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/layout.tsx": {
+    "mtime": 1777782275.6573954,
+    "hash": "dc1e1a77c0b38e1122a08508ac1794e2"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/page.tsx": {
+    "mtime": 1777782275.6579895,
+    "hash": "7f81b68c9161a3337f11df403dbeb18a"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/browser.ts": {
+    "mtime": 1777783292.7395732,
+    "hash": "d8e3f979c8296a907cef331a781f528f"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/client.ts": {
+    "mtime": 1777783292.7394855,
+    "hash": "316cd53c50c4ebb2f062b8e0206e06fd"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/models.ts": {
+    "mtime": 1777783292.7399213,
+    "hash": "a9b5f31927ca59b35de1b345c029984b"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/commonInputTypes.ts": {
+    "mtime": 1777783292.7406323,
+    "hash": "08c94551bde9be73e0d93958abefed7b"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/enums.ts": {
+    "mtime": 1777783292.7395947,
+    "hash": "ac31aff0c4969f7a338100dc53686824"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/internal/class.ts": {
+    "mtime": 1777783292.7410648,
+    "hash": "d925859d910e70a4020e8722d86191bc"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/internal/prismaNamespace.ts": {
+    "mtime": 1777783292.7410548,
+    "hash": "456cb0aa1f310dded2d002ec3720bffa"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/internal/prismaNamespaceBrowser.ts": {
+    "mtime": 1777783292.7412157,
+    "hash": "3e46bb82ee05e6e92b74aa9767ddc7cd"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/models/Project.ts": {
+    "mtime": 1777783292.7409265,
+    "hash": "37b66a0ba86c8a0184b6eac9b6710401"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/generated/prisma/models/ProjectCollaborator.ts": {
+    "mtime": 1777783292.7412155,
+    "hash": "feaba4338504b1b4839f1964aff6e90d"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/api/projects/route.ts": {
+    "mtime": 1777867884.3401628,
+    "hash": "820bcf32c13408f0dd21041b1fbcb069"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/api/projects/[projectId]/route.ts": {
+    "mtime": 1777830732.4889877,
+    "hash": "b3d02d4811dbdc501dfee49306dab0a9"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/api/projects/[projectId]/collaborators/route.ts": {
+    "mtime": 1777868876.4652262,
+    "hash": "3b9f8562c2ac24463469996b9271d44b"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/api/projects/[projectId]/collaborators/[email]/route.ts": {
+    "mtime": 1777866664.380595,
+    "hash": "971ee42de3aa9b1cb535150220747456"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/api/liveblocks-auth/route.ts": {
+    "mtime": 1777870350.6624777,
+    "hash": "3edb647f3a60338cd5ad7e15c685fc66"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/(auth)/layout.tsx": {
+    "mtime": 1777782275.6525126,
+    "hash": "c13425983b6cf0992f7ac4851a176466"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/(auth)/sign-up/[[...sign-up]]/page.tsx": {
+    "mtime": 1777782275.6548746,
+    "hash": "05c556b11f45fb5fa9eae65b8881e74c"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/(auth)/sign-in/[[...sign-in]]/page.tsx": {
+    "mtime": 1777782275.6530087,
+    "hash": "9f291786168043e651bf92ada7eb3752"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/editor/page.tsx": {
+    "mtime": 1777831382.6193764,
+    "hash": "af13fa1e567cf0fbf56759e8a4a9ef89"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/app/editor/[roomId]/page.tsx": {
+    "mtime": 1777866760.0831265,
+    "hash": "464925430fa344ab28196f728636ce70"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/prisma/migrations/20260503044120_init/migration.sql": {
+    "mtime": 1777783280.1837218,
+    "hash": "cc40cfec3104e6b233f53b2c91be0296"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/tabs.tsx": {
+    "mtime": 1777694486.8770192,
+    "hash": "429035bc858475cd3bcedbb08a5ba8da"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/card.tsx": {
+    "mtime": 1777694486.6322474,
+    "hash": "77a10bd948ca424972a28e704a3df604"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/scroll-area.tsx": {
+    "mtime": 1777694487.1035323,
+    "hash": "ac8fc719d0fd13c77c933474827337da"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/dialog.tsx": {
+    "mtime": 1777694487.3223283,
+    "hash": "d9618a63d34473ec512321cc12d43692"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/index.ts": {
+    "mtime": 1777694580.8005488,
+    "hash": "9db986389b45e2cc82860a986dd771a6"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/button.tsx": {
+    "mtime": 1777694461.6676083,
+    "hash": "705bf3552a39e0c722665ccbecb30654"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/textarea.tsx": {
+    "mtime": 1777694487.0203626,
+    "hash": "d448d2a90e48542e51b93a1189127bf2"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/ui/input.tsx": {
+    "mtime": 1777832837.8488457,
+    "hash": "e68bdc81b72561299e8d4589588eb152"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/editor-navbar.tsx": {
+    "mtime": 1777869194.1988652,
+    "hash": "779129053d5dbeb826e30ef7f04f8659"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/project-sidebar.tsx": {
+    "mtime": 1777869190.4140944,
+    "hash": "74fd6187a54f48ad21ec8eabd7cdaa7e"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/access-denied.tsx": {
+    "mtime": 1777866307.0949137,
+    "hash": "ce9cbd64ddf3b1dd53dac012e1d74a62"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/workspace-shell.tsx": {
+    "mtime": 1777908875.9790168,
+    "hash": "6d8d0942d4ac08d411a374a684efa65e"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/editor-home.tsx": {
+    "mtime": 1777868348.8986151,
+    "hash": "614e7614e13eaaed62263501dc56bac7"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/shape-panel.tsx": {
+    "mtime": 1777908264.4717753,
+    "hash": "6f983ebdf6fab97854b26d1f9d173072"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/canvas.tsx": {
+    "mtime": 1777909631.7023046,
+    "hash": "9e230121d6e0ea93250be63070e6e844"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/canvas-wrapper.tsx": {
+    "mtime": 1777908884.0279212,
+    "hash": "ee4027dfd4b9809485060ae3ecd3dab8"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/nodes/canvas-node.tsx": {
+    "mtime": 1777908249.8220875,
+    "hash": "f203a1b5c59e7e3d8f082eb015672587"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/dialogs/share-dialog.tsx": {
+    "mtime": 1777868901.5402892,
+    "hash": "2b0c4662f91174556ed2ecc29a58b615"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/dialogs/create-project-dialog.tsx": {
+    "mtime": 1777868337.9534388,
+    "hash": "249eba2a708b5a1220c538c6eb2ff71d"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/dialogs/delete-project-dialog.tsx": {
+    "mtime": 1777831480.069663,
+    "hash": "7d1bbe2786325bd0a352d3ce0a04b6cd"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/components/editor/dialogs/rename-project-dialog.tsx": {
+    "mtime": 1777831472.649366,
+    "hash": "748bf4b44568a4e0a42df31723618da1"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/hooks/use-project-dialogs.ts": {
+    "mtime": 1777782275.6632411,
+    "hash": "2b555b4443a4ec25d323ad3642280907"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/hooks/use-project-actions.ts": {
+    "mtime": 1777857478.8471658,
+    "hash": "abe772cce616a96ba1ee7a376307720c"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/prisma.ts": {
+    "mtime": 1777868011.2020626,
+    "hash": "3a728d2a848de95c3bda940dbb6fd32c"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/projects.ts": {
+    "mtime": 1777831327.2807853,
+    "hash": "724396eb3de149f8ee51168e75a2b00a"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/clerk-users.ts": {
+    "mtime": 1777866608.9360292,
+    "hash": "1f3a736f0d548d006ef8227ad96b2cc0"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/utils.ts": {
+    "mtime": 1777694461.7493956,
+    "hash": "5a6fd53fdcf2be529e9cc0b718fde352"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/liveblocks.ts": {
+    "mtime": 1777870340.5179174,
+    "hash": "27ec24387e97e4dedc55dcd5c4f3b4d8"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/mock-projects.ts": {
+    "mtime": 1777782275.6636894,
+    "hash": "019b6ac1c3e7862fd6602b61bc7426d2"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/lib/project-access.ts": {
+    "mtime": 1777866294.9607885,
+    "hash": "a9a609155ece3b32ceeea20d0dbb3a9d"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/README.md": {
+    "mtime": 1777692458.5648859,
+    "hash": "f15aaa42d5d299d091b1171097ea56ad"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/AGENTS.md": {
+    "mtime": 1777693919.758018,
+    "hash": "e1dc1d3dfe1c69127967648090364525"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/CLAUDE.md": {
+    "mtime": 1777692498.5840297,
+    "hash": "5c27369b226fcf2be8a6cfe52224e767"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/current-issues.md": {
+    "mtime": 1777909215.5358891,
+    "hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/code-standards.md": {
+    "mtime": 1777693237.9187355,
+    "hash": "c1d25b97a175fbff0c8ced7dc2690691"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/architecture-context.md": {
+    "mtime": 1777693249.5143237,
+    "hash": "3e3a142f65c84c8081a90c91d3bf144a"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/progress-tracker.md": {
+    "mtime": 1777908336.0283837,
+    "hash": "204c6ca81bb687fa3be97f602a9cb7eb"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/ai-workflow-rules.md": {
+    "mtime": 1777693281.401385,
+    "hash": "7b6aeaed37a7fe6738f73327e673e132"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/project-overview.md": {
+    "mtime": 1777693190.294148,
+    "hash": "100b60e9cfa1e94857d195e52c7a053e"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/ui-context.md": {
+    "mtime": 1777693210.3977528,
+    "hash": "14ef08b056926eed3f65b6ee2c1e7880"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/08-editor-workspace-shell.md": {
+    "mtime": 1777833433.1383562,
+    "hash": "01f6e33738b582eb67f339b0b3e60b01"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/01-design-system.md": {
+    "mtime": 1777694074.6347768,
+    "hash": "5a9f3d799ffffc2f7715205da947ac96"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/06-project-apis.md": {
+    "mtime": 1777830555.0386648,
+    "hash": "7e3f7c2a763122167cb74351deca6139"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/04-project-dialogs.md": {
+    "mtime": 1777782275.6622565,
+    "hash": "bbb1ccb8afa8d778558c536c5ae07bb5"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/14-node-editing.md": {
+    "mtime": 1777910826.05638,
+    "hash": "6be834b4f35e1632fe52ff2a71b7839c"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/07-wire-editor-home.md": {
+    "mtime": 1777830956.8101335,
+    "hash": "cc0f96ed95a4bb8f4275bae245f26c92"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/09-share-dialog.md": {
+    "mtime": 1777866353.9674459,
+    "hash": "b303feee1444a7deaaaee7cddd68b475"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/05-prisma.md": {
+    "mtime": 1777782981.0230458,
+    "hash": "ae1fecad619f6c06ea16db009bfe3eb2"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/13-node-shape.md": {
+    "mtime": 1777908219.5445206,
+    "hash": "df17db36a478939b3d15ecbdd1c71066"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/12-shape-panel.md": {
+    "mtime": 1777869389.8763497,
+    "hash": "9cc244c02c4c8151fb18a610440ba061"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/10-liveblocks-setup.md": {
+    "mtime": 1777869191.0393236,
+    "hash": "c6f46f68f5fc5b0c5cd121d90560ccae"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/02-editor.md": {
+    "mtime": 1777782275.6611803,
+    "hash": "2ccf6c974003159e041e0628accb45db"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/11-base-canvas.md": {
+    "mtime": 1777869362.40675,
+    "hash": "a3c232195e0109e39edd55c087d7eae0"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/feature-specs/03-auth.md": {
+    "mtime": 1777782275.661476,
+    "hash": "a6db23efb82c949fb0e7d3d89883f8a0"
+  },
+  "/Volumes/Farhan/Work Folder/Dev/AI/JS Mastery Project/ghost-ai/context/screenshots/ghostai.png": {
+    "mtime": 1777908118.44985,
+    "hash": "65f9f44820d43194bb54e8225f591ff5"
+  }
+}
