@@ -17,7 +17,7 @@ function isTypingInInput(): boolean {
   if (tagName === "input") return true;
   if (tagName === "textarea") return true;
   if (tagName === "select") return true;
-  if (activeElement.hasAttribute("contenteditable")) return true;
+  if ((activeElement as HTMLElement).isContentEditable) return true;
   
   const role = activeElement.getAttribute("role");
   if (role === "textbox" || role === "combobox") return true;

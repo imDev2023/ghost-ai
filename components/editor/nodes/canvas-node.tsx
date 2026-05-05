@@ -20,6 +20,7 @@ interface CanvasFlowNodeProps extends NodeProps<CanvasNode> {
   onEndEdit?: (newLabel: string) => void;
   onCancelEdit?: () => void;
   onColorChange?: (nodeId: string, color: NodeColor) => void;
+  onLabelChange?: (nodeId: string, newLabel: string) => void;
 }
 
 function ColorToolbar({ 
@@ -194,6 +195,7 @@ export function CanvasFlowNode({
   onEndEdit,
   onCancelEdit,
   onColorChange,
+  onLabelChange,
 }: CanvasFlowNodeProps) {
   const isEditing = editingNodeId === id;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -274,6 +276,7 @@ export function CanvasFlowNode({
         <textarea
           ref={textareaRef}
           defaultValue={data.label || ""}
+          placeholder={data.label || "Label"}
           className="absolute inset-0 w-full h-full resize-none border-none outline-none text-center text-xs font-medium nodrag nopan"
           style={{ 
             backgroundColor: "transparent", 
@@ -287,6 +290,7 @@ export function CanvasFlowNode({
             justifyContent: "center",
             lineHeight: "normal",
           }}
+          onChange={(e) => onLabelChange?.(id, e.currentTarget.value)}
           onBlur={handleTextareaBlur}
           onKeyDown={handleTextareaKeyDown}
           onPointerDown={(e) => e.stopPropagation()}
@@ -299,28 +303,28 @@ export function CanvasFlowNode({
             position="top-left" 
             minWidth={60} 
             minHeight={40}
-            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
+            className="w-1.5! h-1.5! bg-white/55! border-0!"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="top-right" 
             minWidth={60} 
             minHeight={40}
-            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
+            className="w-1.5! h-1.5! bg-white/55! border-0!"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="bottom-left" 
             minWidth={60} 
             minHeight={40}
-            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
+            className="w-1.5! h-1.5! bg-white/55! border-0!"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="bottom-right" 
             minWidth={60} 
             minHeight={40}
-            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
+            className="w-1.5! h-1.5! bg-white/55! border-0!"
             style={{ opacity: 0.55 }}
           />
         </>

@@ -203,6 +203,18 @@ change.
   - Liveblocks config Presence type was already correct (cursor + isThinking)
   - npm run build passes
 
+- AI sidebar shell (feature-specs/20-ai-sidebar-shell.md)
+  - Created components/editor/ai-sidebar.tsx: self-contained sidebar component with open/onClose props
+  - Preserved existing slide-in animation (translate-x-0 / translate-x-full), fixed positioning, inert attribute, and z-40 stacking
+  - Updated background to bg-base/95 with backdrop-blur-sm and border-l border-border-default shadow-2xl
+  - Header: Bot icon on bg-ai/15 background, "AI Workspace" title (text-copy-primary), "Collaborate with Ghost AI" subtitle (text-copy-muted), X close button
+  - Tabbed layout using shadcn Tabs (base-ui): AI Architect and Specs tabs; active tab uses data-active:bg-elevated data-active:text-ai-text; inactive text stays text-copy-muted
+  - AI Architect tab: scrollable chat area with empty state (bot icon, description, 3 starter chips using bg-subtle text-ai-text pills), message thread (user messages right-aligned with bg-brand-dim border-brand/50, assistant messages left-aligned with bg-elevated text-ai-text), auto-resizing Textarea (min 72px, max 160px), Send button using bg-ai text-white; Enter submits, Shift+Enter newlines; chat auto-scrolls to bottom
+  - Specs tab: Generate Spec button (bg-ai text-white), demo spec card (bg-elevated border-border-default, FileText icon, title, snippet, disabled Download action)
+  - All colors use existing project tokens — no hardcoded values
+  - Removed the inline aside placeholder from workspace-shell.tsx; imported AiSidebar
+  - npm run build passes
+
 ## In Progress
 
 - None

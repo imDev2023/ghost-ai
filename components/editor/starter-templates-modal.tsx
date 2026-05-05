@@ -138,6 +138,7 @@ export function StarterTemplatesModal({ open, onClose, onImport }: StarterTempla
                   size="sm"
                   variant="outline"
                   className="w-full border-border-default text-copy-secondary hover:text-copy-primary hover:bg-elevated"
+                  aria-label={`Import ${template.name}`}
                   onClick={() => handleImport(template)}
                 >
                   Import

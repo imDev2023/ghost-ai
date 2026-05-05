@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -37,10 +37,12 @@ interface EditingNode {
   label: string;
 }
 
-const nodeTypes: NodeTypes = { canvasNode: CanvasFlowNode };
-const edgeTypes: EdgeTypes = { 
-  canvasEdge: (props) => <CanvasEdgeComponent {...props} /> 
+const edgeTypes: EdgeTypes = {
+  canvasEdge: (props) => <CanvasEdgeComponent {...props} />
 };
+
+let pendingDragPayload: ShapeDragPayload | null = null;
+export function setDragPayload(p: ShapeDragPayload | null) { pendingDragPayload = p; }
 
 let nodeCounter = 0;
 function generateNodeId(shape: string): string {
@@ -173,6 +175,19 @@ function CanvasInner() {
     }
   }, [nodes, onNodesChange]);
 
+  const memoizedNodeTypes = useMemo<NodeTypes>(() => ({
+    canvasNode: (props) => (
+      <CanvasFlowNode
+        {...props}
+        editingNodeId={editingNode?.id}
+        onStartEdit={handleStartEdit}
+        onEndEdit={handleEndEdit}
+        onCancelEdit={handleCancelEdit}
+        onColorChange={handleColorChange}
+      />
+    ),
+  }), [editingNode, handleStartEdit, handleEndEdit, handleCancelEdit, handleColorChange]);
+
   const handleEdgeLabelChange = useCallback((edgeId: string, newLabel: string) => {
     const edge = edges.find(e => e.id === edgeId);
     if (edge) {
@@ -202,8 +217,10 @@ function CanvasInner() {
 
   const nodesRef = useRef(nodes);
   const edgesRef = useRef(edges);
-  nodesRef.current = nodes;
-  edgesRef.current = edges;
+  useEffect(() => {
+    nodesRef.current = nodes;
+    edgesRef.current = edges;
+  }, [nodes, edges]);
 
   useEffect(() => {
     const handler = (ev: CustomEvent<CanvasTemplate>) => {
@@ -268,13 +285,9 @@ function CanvasInner() {
 
   useEffect(() => {
     const handleDragEnter = (e: DragEvent) => {
-      const raw = (e as unknown as { dataTransfer?: { types: string[] } }).dataTransfer?.types.includes("application/json");
-      if (!raw) return;
-      
-      const data = (e as unknown as { dataTransfer?: { getData: (type: string) => string } }).dataTransfer?.getData("application/json");
-      if (!data) return;
-      
-      const { shape, width, height } = JSON.parse(data) as ShapeDragPayload;
+      const hasType = (e as unknown as { dataTransfer?: { types: string[] } }).dataTransfer?.types.includes("application/json");
+      if (!hasType || !pendingDragPayload) return;
+      const { shape, width, height } = pendingDragPayload;
       setDragPreview({ shape, width, height, x: e.clientX, y: e.clientY });
     };
 
@@ -315,19 +328,7 @@ function CanvasInner() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onDelete={onDelete}
-        nodeTypes={{
-          ...nodeTypes,
-          canvasNode: (props) => (
-            <CanvasFlowNode
-              {...props}
-              editingNodeId={editingNode?.id}
-              onStartEdit={handleStartEdit}
-              onEndEdit={handleEndEdit}
-              onCancelEdit={handleCancelEdit}
-              onColorChange={handleColorChange}
-            />
-          ),
-        }}
+        nodeTypes={memoizedNodeTypes}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={{
           type: "canvasEdge",

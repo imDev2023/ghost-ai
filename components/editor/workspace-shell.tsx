@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, BotMessageSquare } from "lucide-react";
 import { EditorNavbar } from "@/components/editor/editor-navbar";
 import { ProjectSidebar } from "@/components/editor/project-sidebar";
+import { AiSidebar } from "@/components/editor/ai-sidebar";
 import { CreateProjectDialog } from "@/components/editor/dialogs/create-project-dialog";
 import { RenameProjectDialog } from "@/components/editor/dialogs/rename-project-dialog";
 import { DeleteProjectDialog } from "@/components/editor/dialogs/delete-project-dialog";
@@ -79,49 +79,10 @@ export function WorkspaceShell({
         <CanvasWrapper roomId={roomId} />
       </main>
 
-      <aside
-        inert={!isAiSidebarOpen}
-        className={`
-          fixed top-14 bottom-0 right-0 w-80 bg-elevated border-l border-border-default z-40
-          flex flex-col transform transition-transform duration-300 ease-in-out
-          ${isAiSidebarOpen ? "translate-x-0" : "translate-x-full pointer-events-none invisible"}
-        `}
-      >
-        <div className="flex items-start justify-between px-4 py-4 border-b border-border-default">
-          <div>
-            <h2 className="text-sm font-semibold text-copy-primary">AI Copilot</h2>
-            <p className="text-xs text-copy-muted mt-0.5">Placeholder panel</p>
-          </div>
-          <Sparkles className="h-4 w-4 text-brand mt-0.5" />
-        </div>
-
-        <div className="flex-1 p-4 flex flex-col gap-3 overflow-y-auto">
-          <div className="rounded-2xl border border-border-default bg-subtle p-4 flex gap-3">
-            <div className="h-8 w-8 rounded-xl bg-subtle border border-border-default flex items-center justify-center shrink-0">
-              <BotMessageSquare className="h-4 w-4 text-ai-text" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm font-medium text-copy-primary">Chat surface pending</p>
-              <p className="text-xs text-copy-muted mt-1 leading-relaxed">
-                The toggle is wired. Messaging and generation are intentionally out of
-                scope here.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex-1" />
-
-          <div className="rounded-2xl border border-border-default bg-subtle p-4">
-            <p className="text-xs font-semibold text-copy-faint uppercase tracking-[0.15em] mb-2">
-              Future Hooks
-            </p>
-            <p className="text-xs text-copy-muted leading-relaxed">
-              Prompt composer, run status, and architecture guidance will attach to this
-              sidebar.
-            </p>
-          </div>
-        </div>
-      </aside>
+      <AiSidebar
+        open={isAiSidebarOpen}
+        onClose={() => setIsAiSidebarOpen(false)}
+      />
 
       <CreateProjectDialog
         open={dialog === "create"}

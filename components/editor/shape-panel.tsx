@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { CanvasShape, ShapeDragPayload } from "@/types/canvas";
+import { setDragPayload } from "@/components/editor/canvas";
 
 interface ShapeConfig {
   shape: CanvasShape;
@@ -34,8 +35,13 @@ export function ShapePanel() {
       width: config.width,
       height: config.height,
     };
+    setDragPayload(payload);
     event.dataTransfer.setData("application/json", JSON.stringify(payload));
     event.dataTransfer.effectAllowed = "copy";
+  }
+
+  function handleDragEnd() {
+    setDragPayload(null);
   }
 
   return (
@@ -48,6 +54,7 @@ export function ShapePanel() {
             title={config.shape}
             draggable
             onDragStart={(e) => handleDragStart(e, config)}
+            onDragEnd={handleDragEnd}
             className="h-8 w-8 flex items-center justify-center rounded-full text-copy-muted hover:text-copy-primary hover:bg-subtle transition-colors cursor-grab active:cursor-grabbing"
           >
             <Icon className="h-4 w-4" />
