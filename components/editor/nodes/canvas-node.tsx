@@ -184,11 +184,11 @@ function SVGShape({ shape, width = 100, height = 100, selected, label, isEditing
   );
 }
 
-export function CanvasFlowNode({ 
-  data, 
-  selected, 
-  width, 
-  height, 
+export function CanvasFlowNode({
+  data,
+  selected,
+  width,
+  height,
   id,
   editingNodeId,
   onStartEdit,
@@ -199,10 +199,12 @@ export function CanvasFlowNode({
 }: CanvasFlowNodeProps) {
   const isEditing = editingNodeId === id;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const cancelledRef = useRef(false);
 
   useEffect(() => {
     if (isEditing && textareaRef.current) {
       textareaRef.current.select();
+      cancelledRef.current = false;
     }
   }, [isEditing]);
 
@@ -213,6 +215,10 @@ export function CanvasFlowNode({
   };
 
   const handleTextareaBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    if (cancelledRef.current) {
+      cancelledRef.current = false;
+      return;
+    }
     if (onEndEdit) {
       onEndEdit(e.currentTarget.value);
     }
@@ -220,6 +226,7 @@ export function CanvasFlowNode({
 
   const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Escape" && onCancelEdit) {
+      cancelledRef.current = true;
       onCancelEdit();
     }
   };
@@ -236,10 +243,10 @@ export function CanvasFlowNode({
 
   return (
     <>
-      <Handle type="source" id="top"    position={Position.Top}    style={handleStyle} className="opacity-0! hover:opacity-100! transition-opacity" />
-      <Handle type="source" id="right"  position={Position.Right}  style={handleStyle} className="opacity-0! hover:opacity-100! transition-opacity" />
-      <Handle type="source" id="bottom" position={Position.Bottom} style={handleStyle} className="opacity-0! hover:opacity-100! transition-opacity" />
-      <Handle type="source" id="left"   position={Position.Left}   style={handleStyle} className="opacity-0! hover:opacity-100! transition-opacity" />
+      <Handle type="source" id="top"    position={Position.Top}    style={handleStyle} className="!opacity-0 hover:!opacity-100 transition-opacity" />
+      <Handle type="source" id="right"  position={Position.Right}  style={handleStyle} className="!opacity-0 hover:!opacity-100 transition-opacity" />
+      <Handle type="source" id="bottom" position={Position.Bottom} style={handleStyle} className="!opacity-0 hover:!opacity-100 transition-opacity" />
+      <Handle type="source" id="left"   position={Position.Left}   style={handleStyle} className="!opacity-0 hover:!opacity-100 transition-opacity" />
       <ColorToolbar 
         nodeId={id}
         selected={selected}
@@ -303,28 +310,28 @@ export function CanvasFlowNode({
             position="top-left" 
             minWidth={60} 
             minHeight={40}
-            className="w-1.5! h-1.5! bg-white/55! border-0!"
+            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="top-right" 
             minWidth={60} 
             minHeight={40}
-            className="w-1.5! h-1.5! bg-white/55! border-0!"
+            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="bottom-left" 
             minWidth={60} 
             minHeight={40}
-            className="w-1.5! h-1.5! bg-white/55! border-0!"
+            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
             style={{ opacity: 0.55 }}
           />
           <NodeResizeControl 
             position="bottom-right" 
             minWidth={60} 
             minHeight={40}
-            className="w-1.5! h-1.5! bg-white/55! border-0!"
+            className="!w-1.5 !h-1.5 !bg-white/55 !border-0"
             style={{ opacity: 0.55 }}
           />
         </>

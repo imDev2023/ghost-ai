@@ -65,6 +65,7 @@ export function AiSidebar({ open, onClose }: AiSidebarProps) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       send(input);
@@ -198,6 +199,7 @@ export function AiSidebar({ open, onClose }: AiSidebarProps) {
                 disabled={!input.trim()}
                 size="icon"
                 className="shrink-0 h-9 w-9 rounded-xl bg-ai hover:bg-ai/90 text-white border-0"
+                aria-label="Send message"
               >
                 <Send className="h-4 w-4" />
               </Button>

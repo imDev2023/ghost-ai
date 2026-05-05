@@ -44,9 +44,8 @@ const edgeTypes: EdgeTypes = {
 let pendingDragPayload: ShapeDragPayload | null = null;
 export function setDragPayload(p: ShapeDragPayload | null) { pendingDragPayload = p; }
 
-let nodeCounter = 0;
 function generateNodeId(shape: string): string {
-  return `${shape}-${Date.now()}-${++nodeCounter}`;
+  return `${shape}-${crypto.randomUUID()}`;
 }
 
 function DragPreviewShape({ shape, width, height }: { shape: CanvasShape; width: number; height: number }) {
@@ -349,6 +348,7 @@ function CanvasInner() {
               onClick={() => zoomOut({ duration: 200 })}
               className="h-7 w-7 flex items-center justify-center rounded-full text-copy-muted hover:text-copy-primary hover:bg-subtle transition-colors"
               title="Zoom out"
+              aria-label="Zoom out"
             >
               <Minus className="h-4 w-4" />
             </button>
@@ -356,6 +356,7 @@ function CanvasInner() {
               onClick={() => fitView({ duration: 200 })}
               className="h-7 w-7 flex items-center justify-center rounded-full text-copy-muted hover:text-copy-primary hover:bg-subtle transition-colors"
               title="Fit view"
+              aria-label="Fit view"
             >
               <Maximize2 className="h-4 w-4" />
             </button>
@@ -363,6 +364,7 @@ function CanvasInner() {
               onClick={() => zoomIn({ duration: 200 })}
               className="h-7 w-7 flex items-center justify-center rounded-full text-copy-muted hover:text-copy-primary hover:bg-subtle transition-colors"
               title="Zoom in"
+              aria-label="Zoom in"
             >
               <Plus className="h-4 w-4" />
             </button>
@@ -371,11 +373,12 @@ function CanvasInner() {
               onClick={undo}
               disabled={!canUndo}
               className={`h-7 w-7 flex items-center justify-center rounded-full transition-colors ${
-                canUndo 
-                  ? "text-copy-muted hover:text-copy-primary hover:bg-subtle" 
+                canUndo
+                  ? "text-copy-muted hover:text-copy-primary hover:bg-subtle"
                   : "text-copy-faint opacity-50 cursor-not-allowed"
               }`}
               title="Undo"
+              aria-label="Undo"
             >
               <RotateCcw className="h-4 w-4" />
             </button>
@@ -383,11 +386,12 @@ function CanvasInner() {
               onClick={redo}
               disabled={!canRedo}
               className={`h-7 w-7 flex items-center justify-center rounded-full transition-colors ${
-                canRedo 
-                  ? "text-copy-muted hover:text-copy-primary hover:bg-subtle" 
+                canRedo
+                  ? "text-copy-muted hover:text-copy-primary hover:bg-subtle"
                   : "text-copy-faint opacity-50 cursor-not-allowed"
               }`}
               title="Redo"
+              aria-label="Redo"
             >
               <RotateCw className="h-4 w-4" />
             </button>
