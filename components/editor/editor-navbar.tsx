@@ -1,6 +1,6 @@
 "use client";
 
-import { Compass, Share2, Sparkles } from "lucide-react";
+import { Compass, LayoutTemplate, Share2, Sparkles } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +10,7 @@ interface EditorNavbarProps {
   projectName?: string;
   onToggleAiSidebar?: () => void;
   onShare?: () => void;
+  onOpenTemplates?: () => void;
 }
 
 export function EditorNavbar({
@@ -18,6 +19,7 @@ export function EditorNavbar({
   projectName,
   onToggleAiSidebar,
   onShare,
+  onOpenTemplates,
 }: EditorNavbarProps) {
   return (
     <nav className="fixed top-0 left-0 right-0 h-14 bg-surface border-b border-border-default flex items-center justify-between px-4 z-50">
@@ -40,6 +42,17 @@ export function EditorNavbar({
       <div className="flex items-center gap-2">
         {onToggleAiSidebar && (
           <>
+            {onOpenTemplates && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={onOpenTemplates}
+                className="gap-1.5 text-copy-secondary hover:text-copy-primary"
+              >
+                <LayoutTemplate className="h-4 w-4" />
+                Templates
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="sm"

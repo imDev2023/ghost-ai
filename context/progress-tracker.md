@@ -9,7 +9,7 @@ change.
 
 ## Current Goal
 
-- Auth wiring implemented successfully
+- Canvas ergonomics implemented successfully
 
 ## Completed
 
@@ -128,6 +128,91 @@ change.
   - Created components/editor/shape-panel.tsx: floating pill toolbar with 6 draggable icon buttons (RectangleHorizontal/Diamond/Circle/Pill/Cylinder/Hexagon from lucide-react); drag start sets application/json payload with shape name and default dimensions (rectangle 160x80, diamond 120x120, circle 80x80, pill 160x60, cylinder 100x100, hexagon 100x100)
   - Updated components/editor/canvas.tsx: split into Canvas (ReactFlowProvider wrapper) and CanvasInner (useLiveblocksFlow + useReactFlow); added onDragOver (preventDefault, dropEffect=copy) and onDrop (parse payload, screenToFlowPosition centered at cursor, onNodesChange add with type canvasNode); nodeTypes registered; ShapePanel in Panel position=bottom-center
   - Node IDs generated as shape-timestamp-counter
+  - npm run build passes
+
+- Node shape (feature-specs/13-node-shape.md)
+  - Nodes render correct shape variants: rectangle, pill, circle via CSS; diamond, hexagon, cylinder via SVG
+  - SVG shapes scale with node size; borders subtle at rest, brighter when selected
+  - Shape drag preview shows ghost attached to cursor during drag from shape panel
+  - npm run build passes
+
+- Node editing (feature-specs/14-node-editing.md)
+  - Selected nodes show resize handles at all four corners using NodeResizeControl
+  - 8px circular handles with rgba(255,255,255,0.55) opacity styling
+  - minWidth=60, minHeight=40 enforced on resize controls
+  - Resize updates node dimensions through existing Liveblocks node state flow
+  - Double-click on node opens inline textarea directly over the node
+  - Label span kept in DOM with visibility:hidden while editing (no layout shifts)
+  - Text auto-selected on focus; on blur or Escape value committed via onNodesChange
+  - Textarea has nodrag nopan to prevent canvas drag/pan while typing
+  - npm run build passes
+
+- Node color toolbar (feature-specs/15-nodes-color-toolbar.md)
+  - Added NODE_COLORS constant in types/canvas.ts with 8 color pairs from ui-context.md
+  - Nodes support backgroundColor and textColor in CanvasNodeData
+  - ColorToolbar appears above selected nodes with 8 color swatches
+  - Active swatch shows border in text color; hover shows glow based on text color
+  - Clicking swatch updates both background and text color via onNodesChange replace
+  - npm run build passes
+
+- Edge behavior (feature-specs/16-edge-behavior.md)
+  - Nodes have handles on all 4 sides (top, right, bottom, left)
+  - Handles are subtle white dots with dark border, hidden by default, visible on hover/selection
+  - Created custom CanvasEdge component with smooth-step right-angle routing
+  - Edges dimmed at rest (rgba(255,255,255,0.4)), brighten on selection (#00c8d4)
+  - Arrowhead marker at edge end
+  - Inline edge label editing via double-click; shows pill badge for saved labels
+  - Empty hint shown for unlabeled edges; label position uses EdgeLabelRenderer
+  - Label updates through existing edge data flow via custom event
+  - npm run build passes
+
+- Canvas ergonomics (feature-specs/17-canvas-ergonomics.md)
+  - Added pill-shaped control bar at bottom-left with zoom controls and undo/redo
+  - Zoom controls: zoom out, fit view, zoom in with 200ms smooth animation
+  - History controls: undo, redo using Liveblocks useUndo/useRedo hooks
+  - Undo/redo buttons disabled when nothing to undo/redo (visually dimmed)
+  - Created hooks/useKeyboardShortcuts.ts with keyboard handler
+  - Shortcuts: +/- for zoom, Cmd/Ctrl+Z for undo, Cmd/Ctrl+Shift+Z or Cmd/Ctrl+Y for redo
+  - Shortcuts skip editable inputs/textarea/contenteditable
+  - No minimap present (was not in base canvas)
+  - npm run build passes
+
+- Starter templates (feature-specs/18-starter-template.md)
+  - Created components/editor/starter-templates.ts: CanvasTemplate type, CANVAS_TEMPLATES array with 3 templates (Microservices, CI/CD Pipeline, Event-Driven System)
+  - Each template uses shared CanvasNode/CanvasEdge types with shape, color, position, and size data
+  - Created components/editor/starter-templates-modal.tsx: Dialog with scrollable grid of template cards
+  - Each card includes a lightweight SVG DiagramPreview (calculates bounds, scales to fixed viewport, draws nodes/edges without React Flow)
+  - Import button calls onImport(template) then closes modal
+  - Wired into WorkspaceShell via StarterTemplatesModal; onImport dispatches canvas-load-template custom event
+  - Canvas.tsx (CanvasInner) listens for canvas-load-template; clears existing nodes/edges and adds template nodes/edges via onNodesChange/onEdgesChange; calls fitView after 150ms
+  - Added Templates button to EditorNavbar (onOpenTemplates prop); shown alongside Share and AI buttons
+  - Fixed bug in canvas-edge.tsx: was manually calculating midpoint instead of using getSmoothStepPath return values for labelX/labelY; also removed unused EdgeMouseHandler import
+  - npm run build passes
+
+- Presence avatars and live cursors (feature-specs/19-presence-avatars-cursor.md)
+  - Created components/editor/presence-avatars.tsx: PresenceAvatarGroup component
+  - Uses useOthers (Liveblocks) and useAuth (Clerk); filters others to exclude current Clerk user ID
+  - Renders up to 5 collaborator avatars in an overlapping stack (8px negative margin), falls back to initials on no avatar
+  - Shows +N overflow chip when more than 5 collaborators are present
+  - Divider (1px vertical) shown only when at least one collaborator exists
+  - Clerk UserButton rendered as the current user's avatar; same 32px size as collaborator avatars
+  - Placed in a ReactFlow Panel at position="top-right" inside CanvasInner (canvas-only, not in the global navbar)
+  - Added useUpdateMyPresence to CanvasInner; onMouseMove on the ReactFlow component converts clientX/Y via screenToFlowPosition and broadcasts cursor position
+  - Mouse leave clears cursor to null
+  - Live cursors rendered for all others with a non-null cursor: flowToScreenPosition converts stored flow coords to viewport coords, positioned with position:fixed; each cursor shows an SVG pointer and a colored name badge matching the participant's presence color
+  - Liveblocks config Presence type was already correct (cursor + isThinking)
+  - npm run build passes
+
+- AI sidebar shell (feature-specs/20-ai-sidebar-shell.md)
+  - Created components/editor/ai-sidebar.tsx: self-contained sidebar component with open/onClose props
+  - Preserved existing slide-in animation (translate-x-0 / translate-x-full), fixed positioning, inert attribute, and z-40 stacking
+  - Updated background to bg-base/95 with backdrop-blur-sm and border-l border-border-default shadow-2xl
+  - Header: Bot icon on bg-ai/15 background, "AI Workspace" title (text-copy-primary), "Collaborate with Ghost AI" subtitle (text-copy-muted), X close button
+  - Tabbed layout using shadcn Tabs (base-ui): AI Architect and Specs tabs; active tab uses data-active:bg-elevated data-active:text-ai-text; inactive text stays text-copy-muted
+  - AI Architect tab: scrollable chat area with empty state (bot icon, description, 3 starter chips using bg-subtle text-ai-text pills), message thread (user messages right-aligned with bg-brand-dim border-brand/50, assistant messages left-aligned with bg-elevated text-ai-text), auto-resizing Textarea (min 72px, max 160px), Send button using bg-ai text-white; Enter submits, Shift+Enter newlines; chat auto-scrolls to bottom
+  - Specs tab: Generate Spec button (bg-ai text-white), demo spec card (bg-elevated border-border-default, FileText icon, title, snippet, disabled Download action)
+  - All colors use existing project tokens — no hardcoded values
+  - Removed the inline aside placeholder from workspace-shell.tsx; imported AiSidebar
   - npm run build passes
 
 ## In Progress
